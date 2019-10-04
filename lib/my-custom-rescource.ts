@@ -5,14 +5,6 @@ import * as lambda from "@aws-cdk/aws-lambda"
 import {PolicyStatement} from "@aws-cdk/aws-iam";
 import {CfnTableProps} from "@aws-cdk/aws-dynamodb";
 
-export interface MyCustomResourceProps {
-    /**
-     * Message to echo
-     */
-    message: string;
-    foo: string,
-}
-
 
 export class MyCustomResource extends Construct {
     public readonly response: string;
@@ -21,6 +13,7 @@ export class MyCustomResource extends Construct {
         super(scope, id);
 
 
+        //need dynamo permissions
         const statement = new PolicyStatement();
         statement.addAllResources();
         statement.addActions("dynamodb:*");
@@ -36,7 +29,7 @@ export class MyCustomResource extends Construct {
                 ]
 
             })),
-            properties: props
+            properties: props //dynamodb props
         });
 
         this.response = resource.getAtt('Response').toString();

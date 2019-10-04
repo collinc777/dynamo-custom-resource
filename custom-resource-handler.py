@@ -1,3 +1,4 @@
+# used python cause i pulled in some hello world example that used it
 import boto3
 
 
@@ -8,6 +9,7 @@ def main(event, context):
 
     # This needs to change if there are to be multiple resources in the same stack
     physical_id = 'TheOnlyCustomResource'
+    # shows we can interact with the dynamo api
     client = boto3.client('dynamodb')
     result = client.describe_table(
         TableName='prodEventsTable'

@@ -9,6 +9,7 @@ export class CustomDynamoExampleStack extends Stack {
     constructor(scope: App, id: string, props?: StackProps) {
         super(scope, id, props);
 
+        // only updates resource when params are updated
         const resource = new MyCustomResource(this, 'DemoResource', {
             keySchema: [
                 {
@@ -17,6 +18,14 @@ export class CustomDynamoExampleStack extends Stack {
 
                 }
             ]
+        });
+
+        const table = new Table(this, "randomTable", {
+            partitionKey: {
+                name: "id",
+                type: AttributeType.STRING,
+            },
+            writeCapacity: 2
         });
 
         // Publish the custom resource output
